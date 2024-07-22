@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo list</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container"> 
+   <div class="to-do-app">
+    <h1>To-Do List<img src="apply_icon.jpg" alt="loading"></h1>
+    <div class="row">
+        <input type="text" id="input-box" placeholder="Add your text">
+        <button onclick="addTask()">Add</button>
+    </div>
+    <ul id="list-container">
+     
+       <!---<li>triff</li>
+        <li class="checked">Task</li>
+              <li>rrennerrtte</li>-->
+    </ul>
+   </div> 
+  </div>
+  <script>
+    const inputBox= document.getElementById("input-box");
+    const listContainer= document.getElementById("list-container");
+     function addTask(){
+        if(inputBox.value===''){
+            alert("You must write something!");
+          }
+          else{
+            let li=document.createElement("li"); //create li tag
+            li.innerHTML=inputBox.value;  //input text in li tag 
+            listContainer.appendChild(li);  // add input item into list-container
+            let span=document.createElement("span"); //add cross icon in span tag
+            span.innerHTML="\u00d7"; //this code for crosss icon
+            li.appendChild(span);//display span tag or cross icon
+          }
+          inputBox.value="";  // item add k baad input empty ho jayega
+         saveData();
+     }
+
+     listContainer.addEventListener("click",function(e){  // FOR  checked list items
+    if(e.target.tagName==="LI"){
+    e.target.classList.toggle("checked");
+      saveData();
+}
+else if(e.target.tagName=== "SPAN"){
+    e.target.parentElement.remove(); // FOR deleting list items
+    saveData();
+}
+     },false);
+     function saveData(){
+        localStorage.setItem("data",listContainer.innerHTML); //data stored in our browser with name data
+     }
+     function showTask(){
+        listContainer.innerHTML=localStorage.getItem("data"); //display data 
+     }
+     showTask();
+  </script>
+</body>
+</html>
